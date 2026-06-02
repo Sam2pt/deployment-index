@@ -50,8 +50,9 @@ export default function Landing({ onStart }: { onStart: () => void }) {
         INDEX
       </motion.h1>
 
-      <motion.p variants={fade} className="term-lg mt-7 text-muted">
-        Which one are you?
+      <motion.p variants={fade} className="term-lg mt-7 max-w-md text-muted">
+        The noise of AI is deafening. Real deployment is quiet. Which one are
+        you?
       </motion.p>
 
       {/* The roster pops in one fighter at a time. */}

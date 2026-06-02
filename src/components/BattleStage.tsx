@@ -24,13 +24,14 @@ const ATTACKS = [
   { word: "SMASH!", color: "#ff6b35", rot: -4, anim: { x: [0, 18, 52, 0], y: [0, -54, 12, 0], rotate: [0, 0, 0, 0] }, boss: [0, 22, -10, 0] },
 ];
 
-// What STATUS QUO snarls each round — cocky, then rattled, then desperate.
+// THE NOISE — the hype/buzzword machine around AI. It spouts noise, then
+// deflates as your real-deployment moves land.
 const TAUNTS = [
-  "You can't change anything.",
-  "Pfft. Beginner's luck.",
-  "...okay, that one stung.",
-  "Not the roadmap! Anything but the roadmap!",
-  "Fine! FINE! We'll ship it!",
+  "AI changes EVERYTHING. Obviously.",
+  "But have you SEEN this demo?!",
+  "Just bolt a copilot onto it!",
+  "The board wants a GenAI deck!",
+  "...fine. Maybe shipping beats slideware.",
 ];
 
 export default function BattleStage({
@@ -74,7 +75,7 @@ export default function BattleStage({
       <div className="mb-3 flex items-center justify-between gap-3">
         <HealthBar name="YOU" hp={100} color="var(--accent)" align="left" />
         <span className="hud shrink-0 text-foreground">R{round}/{TOTAL_ROUNDS}</span>
-        <HealthBar name="STATUS QUO" hp={hp} color="#ff3b3b" align="right" />
+        <HealthBar name="THE NOISE" hp={hp} color="#ff3b3b" align="right" />
       </div>
 
       {/* Arena (shake escalates with the round) */}
@@ -190,7 +191,7 @@ export default function BattleStage({
         <PixelSprite map={BOSS} accent="#4a4063" dark="#2a2342" px={2} />
         <div className="min-w-0">
           <span className="hud" style={{ color: "#ff8a8a" }}>
-            Status Quo
+            The Noise
           </span>
           <AnimatePresence mode="wait">
             <motion.p

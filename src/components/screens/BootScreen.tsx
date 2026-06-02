@@ -71,15 +71,15 @@ export default function BootScreen({ onDone }: { onDone: () => void }) {
                 animate={{ opacity: [1, 0.3, 1] }}
                 transition={{ duration: 0.7, repeat: Infinity }}
               >
-                ★ Now entering ★
+                ★ Your mission ★
               </motion.p>
               <p className="font-pixel glitch-text text-[clamp(1.5rem,8vw,3.5rem)] leading-[1.45] text-foreground">
-                WELCOME
+                DEFEAT
                 <br />
-                TO THE
+                THE
                 <br />
                 <span className="accent-glow" style={{ color: "var(--accent)" }}>
-                  ARENA
+                  NOISE
                 </span>
               </p>
             </div>

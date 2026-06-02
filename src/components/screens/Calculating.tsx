@@ -6,7 +6,7 @@ import { sfxRiser } from "@/lib/sfx";
 import { Screen } from "./_shared";
 
 const PHRASES = [
-  "Reading the signals",
+  "Filtering the noise",
   "Mapping your class",
   "Placing you in your arena",
 ];
