@@ -97,28 +97,27 @@ export const ARCHETYPES: Record<ArchetypeKey, Archetype> = {
       { label: "Velocity", value: 68 },
     ],
   },
-  bandit: {
-    key: "bandit",
+  renaissance: {
+    key: "renaissance",
     index: "05",
-    name: "The Bandit",
-    short: "Bandit",
-    tagline: "Hoards the budget. Blocks the rollout. Rides off into the sunset.",
+    name: "The Renaissance Lead",
+    short: "Renaissance Lead",
+    tagline: "Curious. Breadth-first. AI-fluent across the function.",
     paragraph:
-      "Bandits don't deploy, they delay. While the rest of the market ships, you're still \"evaluating.\" The pilot's been \"next quarter\" for three quarters running, and you guard the status quo like it's gold in a vault. The good news: every great comeback starts with a villain arc. One approved rollout and you're a hero.",
+      "Renaissance Leads see AI everywhere: creative briefs, paid media, customer journeys, brand strategy, ops. You're not specialised in any of it because you're fluent in all of it. The teams around you learn fastest because you make connections others miss.",
     nextMoves: [
-      "Green-light one pilot you've been sitting on",
-      "Retire \"let's wait and see\" for a quarter",
-      "Let the team ship before a competitor does",
+      "Pick one domain to compound into",
+      "Build a small in-house AI capability",
+      "Publish your perspective externally",
     ],
-    servicePath: "Strategy & Diagnostic → Custom Deployments (time to actually ship)",
-    // The joke class: deliberately rock-bottom, unlike everyone else's flattering band.
-    percentile: { min: 2, max: 11 },
-    palette: { c1: "#E63946", c2: "#FF6B35", c3: "#C1121F", accent: "#FF5A5A" },
+    servicePath: "Strategy & Diagnostic (broad) → multi-domain pod",
+    percentile: { min: 72, max: 90 },
+    palette: { c1: "#14E0C8", c2: "#FFC93C", c3: "#22D3EE", accent: "#5BEAD9" },
     stats: [
-      { label: "Foot-dragging", value: 96 },
-      { label: "Budget guard", value: 90 },
-      { label: "Vision", value: 24 },
-      { label: "Velocity", value: 18 },
+      { label: "Range", value: 96 },
+      { label: "Curiosity", value: 90 },
+      { label: "Vision", value: 80 },
+      { label: "Adaptability", value: 78 },
     ],
   },
 };
@@ -128,5 +127,5 @@ export const ARCHETYPE_ORDER: ArchetypeKey[] = [
   "pioneer",
   "operator",
   "connector",
-  "bandit",
+  "renaissance",
 ];

@@ -110,18 +110,11 @@ export default function RankingReveal({
         transition={{ duration: 0.4 }}
         className="mt-8 w-full"
       >
-        {result.archetype === "bandit" ? (
-          <p className="term-lg text-foreground">
-            <span style={{ color: "var(--accent)" }}>Dead last</span> in{" "}
-            {industryLabel}. Someone&apos;s gotta block progress.
-          </p>
-        ) : (
-          <p className="term-lg text-foreground">
-            You&apos;re in the{" "}
-            <span style={{ color: "var(--accent)" }}>top {result.topPercent}%</span>{" "}
-            of marketing leaders in {industryLabel}.
-          </p>
-        )}
+        <p className="term-lg text-foreground">
+          You&apos;re in the{" "}
+          <span style={{ color: "var(--accent)" }}>top {result.topPercent}%</span>{" "}
+          of marketing leaders in {industryLabel}.
+        </p>
 
         <div className="mx-auto mt-8 flex max-w-xs flex-col gap-3">
           <PixelButton onClick={onEmail}>▶ Unlock Full Report</PixelButton>

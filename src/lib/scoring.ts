@@ -21,7 +21,7 @@ function tallyAnswers(answers: Record<number, string>): Record<ArchetypeKey, num
     pioneer: 0,
     operator: 0,
     connector: 0,
-    bandit: 0,
+    renaissance: 0,
   };
   for (const q of QUESTIONS) {
     const choice = answers[q.number];
@@ -96,19 +96,16 @@ export function computePercentile(
   return min + offset;
 }
 
-// Arcade letter grade from percentile. Real classes sit in flattering bands
-// (B or better, PRD §08); only the Bandit's rock-bottom band hits F.
+// Arcade letter grade from percentile. The floor (~65th) keeps everyone at
+// B or better — flattering by design (PRD §08).
 export function gradeFor(percentile: number): string {
   if (percentile >= 88) return "S";
   if (percentile >= 78) return "A";
-  if (percentile >= 40) return "B";
-  return "F";
+  return "B";
 }
 
-// Headline rank label. Everyone gets a flattering "Top X%" — except the Bandit,
-// who earns the wooden spoon.
+// Headline rank label — flattering "Top X%" for every class.
 export function rankLabel(result: Result): string {
-  if (result.archetype === "bandit") return "Dead last";
   return `Top ${result.topPercent}%`;
 }
 

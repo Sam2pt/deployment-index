@@ -5,7 +5,7 @@ export type ArchetypeKey =
   | "pioneer"
   | "operator"
   | "connector"
-  | "bandit";
+  | "renaissance";
 
 export interface Archetype {
   key: ArchetypeKey;

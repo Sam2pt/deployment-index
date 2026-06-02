@@ -90,20 +90,6 @@ export default function BattleStage({
           style={{ background: "linear-gradient(to top, color-mix(in srgb, var(--accent) 18%, transparent), transparent)" }}
         />
 
-        {/* Boss taunt — STATUS QUO talks trash, escalating each round */}
-        <motion.div
-          key={`taunt-${round}`}
-          initial={{ opacity: 0, y: 8, scale: 0.92 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 18 }}
-          className="absolute right-4 top-3 z-10 max-w-[58%] border-2 px-3 py-2 text-right"
-          style={{ background: "var(--panel-2)", borderColor: "#ff3b3b", borderRadius: 0 }}
-        >
-          <span className="font-term text-sm leading-tight" style={{ color: "#ff8a8a" }}>
-            {TAUNTS[Math.min(round - 1, TAUNTS.length - 1)]}
-          </span>
-        </motion.div>
-
         {/* Player — a different move each round */}
         <motion.div
           className="relative z-10"
@@ -194,6 +180,31 @@ export default function BattleStage({
             </button>
           );
         })}
+      </div>
+
+      {/* Voice bar — STATUS QUO's line for the round (out of the fighters' way) */}
+      <div
+        className="mt-3 flex items-center gap-3 border-2 px-3 py-2"
+        style={{ borderColor: "#ff3b3b", background: "var(--panel-2)", borderRadius: 0 }}
+      >
+        <PixelSprite map={BOSS} accent="#4a4063" dark="#2a2342" px={2} />
+        <div className="min-w-0">
+          <span className="hud" style={{ color: "#ff8a8a" }}>
+            Status Quo
+          </span>
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={round}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -4 }}
+              transition={{ duration: 0.25 }}
+              className="font-term text-sm leading-tight text-foreground"
+            >
+              {TAUNTS[Math.min(round - 1, TAUNTS.length - 1)]}
+            </motion.p>
+          </AnimatePresence>
+        </div>
       </div>
     </div>
   );
