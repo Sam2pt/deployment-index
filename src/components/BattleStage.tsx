@@ -36,15 +36,18 @@ const TAUNTS = [
 
 export default function BattleStage({
   round, // 1-based round number
+  playerName,
   prompt,
   options,
   onPick,
 }: {
   round: number;
+  playerName: string;
   prompt: string;
   options: AnswerOption[];
   onPick: (optionId: string) => void;
 }) {
+  const youLabel = (playerName || "You").toUpperCase().slice(0, 12);
   const bossStart = Math.max(0, 100 - (round - 1) * (100 / TOTAL_ROUNDS));
   const bossAfter = Math.max(0, 100 - round * (100 / TOTAL_ROUNDS));
 
@@ -73,7 +76,7 @@ export default function BattleStage({
     <div className="flex w-full max-w-xl flex-col">
       {/* Health HUD */}
       <div className="mb-3 flex items-center justify-between gap-3">
-        <HealthBar name="YOU" hp={100} color="var(--accent)" align="left" />
+        <HealthBar name={youLabel} hp={100} color="var(--accent)" align="left" />
         <span className="hud shrink-0 text-foreground">R{round}/{TOTAL_ROUNDS}</span>
         <HealthBar name="THE NOISE" hp={hp} color="#ff3b3b" align="right" />
       </div>

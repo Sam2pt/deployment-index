@@ -14,9 +14,11 @@ const SEGMENTS = 10;
 
 export default function ArchetypeReveal({
   result,
+  name,
   onContinue,
 }: {
   result: Result;
+  name: string;
   onContinue: () => void;
 }) {
   const a = ARCHETYPES[result.archetype];
@@ -41,7 +43,7 @@ export default function ArchetypeReveal({
         transition={{ delay: 0.1 }}
         className="font-pixel accent-glow blink mb-4 text-xs uppercase"
       >
-        ★ Class unlocked ★
+        {name ? `${name} — class unlocked` : "★ Class unlocked ★"}
       </motion.p>
 
       {/* Character + celebratory burst. */}

@@ -11,6 +11,7 @@ import Background from "@/components/Background";
 import SoundToggle from "@/components/SoundToggle";
 import BootScreen from "@/components/screens/BootScreen";
 import Landing from "@/components/screens/Landing";
+import PlayerSetup from "@/components/screens/PlayerSetup";
 import Questions from "@/components/screens/Questions";
 import Calculating from "@/components/screens/Calculating";
 import ArchetypeReveal from "@/components/screens/ArchetypeReveal";
@@ -21,6 +22,7 @@ import ShareCard from "@/components/screens/ShareCard";
 type Stage =
   | "boot"
   | "landing"
+  | "setup"
   | "questions"
   | "calculating"
   | "archetype"
@@ -36,11 +38,22 @@ export default function DeploymentIndex() {
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [industry, setIndustry] = useState<string>("");
   const [result, setResult] = useState<Result | null>(null);
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
 
+  // Press Start → collect name + role, then fight.
   const start = useCallback(() => {
     setAnswers({});
     setIndustry("");
     setResult(null);
+    setName("");
+    setRole("");
+    setStage("setup");
+  }, []);
+
+  const completeSetup = useCallback((playerName: string, playerRole: string) => {
+    setName(playerName);
+    setRole(playerRole);
     setStage("questions");
   }, []);
 
@@ -48,6 +61,8 @@ export default function DeploymentIndex() {
     setAnswers({});
     setIndustry("");
     setResult(null);
+    setName("");
+    setRole("");
     setStage("landing");
   }, []);
 
@@ -85,10 +100,20 @@ export default function DeploymentIndex() {
         return <BootScreen key="boot" onDone={() => setStage("landing")} />;
       case "landing":
         return <Landing key="landing" onStart={start} />;
+      case "setup":
+        return (
+          <PlayerSetup
+            key="setup"
+            initialName={name}
+            initialRole={role}
+            onComplete={completeSetup}
+          />
+        );
       case "questions":
         return (
           <Questions
             key="questions"
+            playerName={name}
             initialAnswers={answers}
             initialIndustry={industry}
             onComplete={finishQuestions}
@@ -103,6 +128,7 @@ export default function DeploymentIndex() {
           <ArchetypeReveal
             key="archetype"
             result={result}
+            name={name}
             onContinue={() => setStage("ranking")}
           />
         ) : null;
@@ -111,6 +137,7 @@ export default function DeploymentIndex() {
           <RankingReveal
             key="ranking"
             result={result}
+            name={name}
             onEmail={() => setStage("email")}
             onShare={() => setStage("share")}
           />
@@ -120,6 +147,8 @@ export default function DeploymentIndex() {
           <EmailCapture
             key="email"
             result={result}
+            name={name}
+            role={role}
             onShare={() => setStage("share")}
           />
         ) : null;
@@ -135,7 +164,7 @@ export default function DeploymentIndex() {
       default:
         return null;
     }
-  }, [stage, start, restart, answers, industry, finishQuestions, result]);
+  }, [stage, start, completeSetup, restart, answers, industry, finishQuestions, result, name, role]);
 
   return (
     <div className="relative min-h-[100dvh] w-full" style={themeStyle}>

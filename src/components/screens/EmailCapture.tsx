@@ -15,9 +15,13 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function EmailCapture({
   result,
+  name,
+  role,
   onShare,
 }: {
   result: Result;
+  name: string;
+  role: string;
   onShare: () => void;
 }) {
   const [email, setEmail] = useState("");
@@ -43,7 +47,7 @@ export default function EmailCapture({
       await fetch("/api/submit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, wantsReport, wantsSession, result }),
+        body: JSON.stringify({ name, role, email, wantsReport, wantsSession, result }),
       }).catch(() => {});
     } finally {
       setSubmitting(false);
@@ -113,7 +117,7 @@ export default function EmailCapture({
   return (
     <Screen className="text-center">
       <p className="font-pixel accent-glow mb-5 text-sm uppercase">
-        ▸ Continue?
+        {name ? `▸ Nice fight, ${name}` : "▸ Continue?"}
       </p>
       <h2 className="font-pixel text-lg uppercase leading-[1.5] text-foreground">
         Enter email to unlock your full report

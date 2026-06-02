@@ -14,7 +14,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "bad json" }, { status: 400 });
   }
 
-  const { email } = (body ?? {}) as { email?: string };
+  const { email, name, role } = (body ?? {}) as {
+    email?: string;
+    name?: string;
+    role?: string;
+  };
   if (!email || !EMAIL_RE.test(email)) {
     return NextResponse.json(
       { ok: false, error: "invalid email" },
@@ -22,6 +26,11 @@ export async function POST(req: Request) {
     );
   }
 
-  // TODO: persist response + email, enqueue PDF delivery.
+  // Lead profile captured in-game (name + role) arrives alongside the email and
+  // the computed result — qualified data gathered while they played.
+  void name;
+  void role;
+
+  // TODO: persist lead (name, role, email, result) + enqueue PDF delivery.
   return NextResponse.json({ ok: true });
 }

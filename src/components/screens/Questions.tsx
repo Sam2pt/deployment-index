@@ -17,10 +17,12 @@ function tap() {
 const AUTO_ADVANCE_MS = 720; // let the player finish the jump before advancing
 
 export default function Questions({
+  playerName,
   initialAnswers,
   initialIndustry,
   onComplete,
 }: {
+  playerName: string;
   initialAnswers: Record<number, string>;
   initialIndustry: string;
   onComplete: (answers: Record<number, string>, industry: string) => void;
@@ -64,6 +66,7 @@ export default function Questions({
           <QuestionView
             key={`q-${step}`}
             round={step + 1}
+            playerName={playerName}
             number={QUESTIONS[step].number}
             prompt={QUESTIONS[step].prompt}
             options={QUESTIONS[step].options}
@@ -91,12 +94,14 @@ const viewMotion = {
 
 function QuestionView({
   round,
+  playerName,
   number,
   prompt,
   options,
   onPick,
 }: {
   round: number;
+  playerName: string;
   number: number;
   prompt: string;
   options: AnswerOption[];
@@ -106,6 +111,7 @@ function QuestionView({
     <motion.div {...viewMotion} className="w-full">
       <BattleStage
         round={round}
+        playerName={playerName}
         prompt={prompt}
         options={options}
         onPick={(id) => onPick(number, id)}

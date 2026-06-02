@@ -17,10 +17,12 @@ const CELLS = 20;
 
 export default function RankingReveal({
   result,
+  name,
   onEmail,
   onShare,
 }: {
   result: Result;
+  name: string;
   onEmail: () => void;
   onShare: () => void;
 }) {
@@ -62,7 +64,7 @@ export default function RankingReveal({
         className="mb-4"
       />
       <p className="font-pixel accent-glow blink mb-6 text-sm uppercase">
-        ☆ High Score ☆
+        {name ? `☆ ${name}'s High Score ☆` : "☆ High Score ☆"}
       </p>
 
       {/* Score + rank badge */}
