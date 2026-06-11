@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
+import { sendLeadEmails, type Lead } from "@/lib/email";
+import type { Result } from "@/lib/types";
 
-// Lead capture endpoint. v1 stub: validates shape and acks. Next iteration
-// wires this to Postgres/Supabase (anonymous response + email table per PRD
-// §10) and triggers the transactional PDF email via Resend/Postmark.
+// Lead capture endpoint. Validates the submission, then sends two emails via
+// Resend: a result/confirmation to the player and a lead alert to 2PT.
+// (Persistence to a DB is still a TODO; emails are the launch-critical path.)
+
+export const runtime = "nodejs";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -14,23 +18,37 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: "bad json" }, { status: 400 });
   }
 
-  const { email, name, role } = (body ?? {}) as {
+  const { email, name, role, wantsReport, wantsSession, result } = (body ?? {}) as {
     email?: string;
     name?: string;
     role?: string;
+    wantsReport?: boolean;
+    wantsSession?: boolean;
+    result?: Result;
   };
+
   if (!email || !EMAIL_RE.test(email)) {
-    return NextResponse.json(
-      { ok: false, error: "invalid email" },
-      { status: 422 },
-    );
+    return NextResponse.json({ ok: false, error: "invalid email" }, { status: 422 });
+  }
+  if (!result || !result.archetype) {
+    return NextResponse.json({ ok: false, error: "missing result" }, { status: 422 });
   }
 
-  // Lead profile captured in-game (name + role) arrives alongside the email and
-  // the computed result — qualified data gathered while they played.
-  void name;
-  void role;
+  const lead: Lead = {
+    name: (name ?? "").toString().slice(0, 80),
+    role: (role ?? "").toString().slice(0, 80),
+    email,
+    wantsReport: !!wantsReport,
+    wantsSession: !!wantsSession,
+    result,
+  };
 
-  // TODO: persist lead (name, role, email, result) + enqueue PDF delivery.
+  try {
+    await sendLeadEmails(lead);
+  } catch (err) {
+    // Fail soft: never block the player's UX on an email hiccup.
+    console.error("[submit] email send threw:", err);
+  }
+
   return NextResponse.json({ ok: true });
 }
