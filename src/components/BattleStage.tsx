@@ -24,16 +24,6 @@ const ATTACKS = [
   { word: "SMASH!", color: "#ff6b35", rot: -4, anim: { x: [0, 18, 52, 0], y: [0, -54, 12, 0], rotate: [0, 0, 0, 0] }, boss: [0, 22, -10, 0] },
 ];
 
-// THE NOISE — the hype/buzzword machine around AI. It spouts noise, then
-// deflates as your real-deployment moves land.
-const TAUNTS = [
-  "AI changes EVERYTHING. Obviously.",
-  "But have you SEEN this demo?!",
-  "Just bolt a copilot onto it!",
-  "The board wants a GenAI deck!",
-  "...fine. Maybe shipping beats slideware.",
-];
-
 export default function BattleStage({
   round, // 1-based round number
   playerName,
@@ -184,31 +174,6 @@ export default function BattleStage({
             </button>
           );
         })}
-      </div>
-
-      {/* Voice bar — STATUS QUO's line for the round (out of the fighters' way) */}
-      <div
-        className="mt-3 flex items-center gap-3 border-2 px-3 py-2"
-        style={{ borderColor: "#ff3b3b", background: "var(--panel-2)", borderRadius: 0 }}
-      >
-        <PixelSprite map={BOSS} accent="#4a4063" dark="#2a2342" px={2} />
-        <div className="min-w-0">
-          <span className="hud" style={{ color: "#ff8a8a" }}>
-            The Noise
-          </span>
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={round}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.25 }}
-              className="font-term text-sm leading-tight text-foreground"
-            >
-              {TAUNTS[Math.min(round - 1, TAUNTS.length - 1)]}
-            </motion.p>
-          </AnimatePresence>
-        </div>
       </div>
     </div>
   );
