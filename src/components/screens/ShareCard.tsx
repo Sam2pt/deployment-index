@@ -27,7 +27,12 @@ export default function ShareCard({
   const industryLabel =
     INDUSTRIES.find((i) => i.id === result.industry)?.label ?? "";
 
-  const shareText = `I just played 2PT's Deployment Index. Class unlocked: ${a.short}. Rank ${grade}, ${rankLabel(result).toLowerCase()} in ${industryLabel}. What's your class? ${SITE}`;
+  // Per-class URL so the LinkedIn / X / iMessage preview shows this class's
+  // Open Graph card (see src/app/s/[class]). Sharing the bare domain would
+  // only ever show the generic card.
+  const shareUrl = `https://${SITE}/s/${result.archetype}`;
+
+  const shareText = `I just played 2PT's Deployment Index. Class unlocked: ${a.short}. Rank ${grade}, ${rankLabel(result).toLowerCase()} in ${industryLabel}. What's your class? ${shareUrl}`;
 
   async function copy() {
     try {
@@ -40,7 +45,7 @@ export default function ShareCard({
   }
 
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-    `https://${SITE}`,
+    shareUrl,
   )}`;
 
   return (
