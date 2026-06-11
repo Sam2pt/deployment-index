@@ -101,11 +101,13 @@ function notifyEmail(lead: Lead): { subject: string; html: string } {
   };
 }
 
-export async function sendLeadEmails(lead: Lead): Promise<{ sent: boolean }> {
+export async function sendLeadEmails(
+  lead: Lead,
+): Promise<{ sent: boolean; errors: string[] }> {
   const key = process.env.RESEND_API_KEY;
   if (!key) {
     console.warn("[email] RESEND_API_KEY not set — skipping send (lead still acked).");
-    return { sent: false };
+    return { sent: false, errors: ["no_api_key"] };
   }
 
   const resend = new Resend(key);
@@ -123,11 +125,17 @@ export async function sendLeadEmails(lead: Lead): Promise<{ sent: boolean }> {
     }),
   ]);
 
+  const errors: string[] = [];
   results.forEach((r, i) => {
     const which = i === 0 ? "player" : "notify";
-    if (r.status === "rejected") console.error(`[email] ${which} send failed:`, r.reason);
-    else if (r.value.error) console.error(`[email] ${which} send error:`, r.value.error);
+    if (r.status === "rejected") {
+      console.error(`[email] ${which} send failed:`, r.reason);
+      errors.push(`${which}: ${String(r.reason).slice(0, 120)}`);
+    } else if (r.value.error) {
+      console.error(`[email] ${which} send error:`, r.value.error);
+      errors.push(`${which}: ${JSON.stringify(r.value.error).slice(0, 160)}`);
+    }
   });
 
-  return { sent: true };
+  return { sent: true, errors };
 }

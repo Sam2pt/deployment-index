@@ -43,12 +43,15 @@ export async function POST(req: Request) {
     result,
   };
 
+  let emailDebug: { sent: boolean; errors: string[] } = { sent: false, errors: [] };
   try {
-    await sendLeadEmails(lead);
+    emailDebug = await sendLeadEmails(lead);
   } catch (err) {
     // Fail soft: never block the player's UX on an email hiccup.
     console.error("[submit] email send threw:", err);
+    emailDebug = { sent: false, errors: [`threw: ${String(err).slice(0, 160)}`] };
   }
 
-  return NextResponse.json({ ok: true });
+  // `debug` is a temporary diagnostic surfaced during launch setup.
+  return NextResponse.json({ ok: true, debug: emailDebug });
 }
