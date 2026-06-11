@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { sendLeadEmails, type Lead } from "@/lib/email";
+import { rateLimit } from "@/lib/rate-limit";
 import type { Result } from "@/lib/types";
 
 // Lead capture endpoint. Validates the submission, then sends two emails via
@@ -11,6 +12,22 @@ export const runtime = "nodejs";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(req: Request) {
+  // Throttle the public endpoint: a per-IP burst cap plus a per-instance global
+  // cap, so a shared link can't be used to fan out emails or burn Resend quota.
+  const ip =
+    req.headers.get("x-nf-client-connection-ip") ||
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    "unknown";
+  if (
+    !rateLimit(`submit:${ip}`, 5, 60_000).ok ||
+    !rateLimit("submit:global", 60, 60_000).ok
+  ) {
+    return NextResponse.json(
+      { ok: false, error: "rate_limited" },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
   try {
     body = await req.json();

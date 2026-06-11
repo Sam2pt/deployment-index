@@ -35,7 +35,7 @@ export const ARCHETYPES: Record<ArchetypeKey, Archetype> = {
     short: "Pioneer",
     tagline: "Early. Bold. Often ahead of the rest of the org.",
     paragraph:
-      "Pioneers move first. You're the one who said yes to ChatGPT in 2022, ran the first AI pilot before anyone had budget for it, and still test things on Friday nights. The rest of the company catches up to where you've already been.",
+      "Pioneers move first. You're the one who said yes to ChatGPT in 2022, ran the first AI pilot before anyone had budget for it, and you still test things on Friday nights. The rest of the company catches up to where you've already been.",
     nextMoves: [
       "Convert pilots into production",
       "Get the data foundation right",
@@ -104,7 +104,7 @@ export const ARCHETYPES: Record<ArchetypeKey, Archetype> = {
     short: "Renaissance Lead",
     tagline: "Curious. Breadth-first. AI-fluent across the function.",
     paragraph:
-      "Renaissance Leads see AI everywhere: creative briefs, paid media, customer journeys, brand strategy, ops. You're not specialised in any of it because you're fluent in all of it. The teams around you learn fastest because you make connections others miss.",
+      "Renaissance Leads see AI everywhere: creative briefs, paid media, customer journeys, brand strategy, ops. You're not specialized in any of it because you're fluent in all of it. The teams around you learn fastest because you make connections others miss.",
     nextMoves: [
       "Pick one domain to compound into",
       "Build a small in-house AI capability",

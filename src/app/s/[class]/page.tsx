@@ -24,7 +24,7 @@ export async function generateMetadata({
     return { alternates: { canonical: "/" } };
   }
 
-  const title = `I'm ${a.name} — The Deployment Index`;
+  const title = `I'm ${a.name} · The Deployment Index`;
   const description = `${a.tagline} Which AI marketing leader are you? Find out in 60 seconds.`;
 
   return {

@@ -54,7 +54,7 @@ export const QUESTIONS: Question[] = [
     prompt: "Your team's biggest focus right now:",
     options: [
       { id: "a", tag: "Go to production", label: "Production AI doing what humans used to", archetype: "architect" },
-      { id: "b", tag: "Faster pilots", label: "Faster pilots without losing rigour", archetype: "pioneer" },
+      { id: "b", tag: "Faster pilots", label: "Faster pilots without losing rigor", archetype: "pioneer" },
       { id: "c", tag: "Prove the ROI", label: "Proving ROI on what's already deployed", archetype: "operator" },
       { id: "d", tag: "Move in sync", label: "Getting tech, data, and marketing to move at the same pace", archetype: "connector" },
       { id: "e", tag: "Keeping pace", label: "Keeping pace with the breadth of where AI is showing up", archetype: "renaissance" },

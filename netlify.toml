@@ -1,0 +1,19 @@
+# Root HTML must NOT be cached at the Netlify edge. Chunk hashes rotate per
+# deploy, so a stale cached HTML references JS chunks that no longer exist,
+# producing a browser-only ChunkLoadError while curl returns 200. Browser
+# headers alone are not enough: Netlify's Durable cache has its own
+# stale-while-revalidate semantics and ignores the browser must-revalidate.
+# Set both layers.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Netlify-CDN-Cache-Control = "no-store"
+
+# Hashed static assets are content-addressed and immutable: cache them hard at
+# both the browser and the edge.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Netlify-CDN-Cache-Control = "public, max-age=31536000, immutable"

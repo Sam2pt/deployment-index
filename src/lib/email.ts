@@ -54,7 +54,7 @@ function playerEmail(lead: Lead): { subject: string; html: string } {
         <div style="color:#19e68c;margin-top:6px;font-size:15px">${esc(a.tagline)}</div>
       </td></tr>
       <tr><td style="padding:28px 32px;color:#1a1a1a;font-size:15px;line-height:1.6">
-        <p style="margin:0 0 14px">Nice work, ${esc(name)} — you took on the noise of AI and came out as <strong>${esc(a.name)}</strong>, ranking <strong>rank ${gradeFor(lead.result.percentile)} · top ${lead.result.topPercent}%</strong> of ${esc(industryLabel(lead.result.industry))} leaders.</p>
+        <p style="margin:0 0 14px">Nice work, ${esc(name)}. You took on the noise of AI and came out as <strong>${esc(a.name)}</strong>, ranking <strong>rank ${gradeFor(lead.result.percentile)} · top ${lead.result.topPercent}%</strong> of ${esc(industryLabel(lead.result.industry))} leaders.</p>
         <p style="margin:0 0 6px;font-weight:700;color:#0a0618">${esc(a.paragraph)}</p>
         <p style="margin:20px 0 8px;font-weight:800;color:#0a0618;font-size:13px;letter-spacing:1px;text-transform:uppercase">The three moves leaders like you make next</p>
         <table role="presentation" cellpadding="0" cellspacing="0">${movesHtml}</table>
@@ -65,7 +65,7 @@ function playerEmail(lead: Lead): { subject: string; html: string } {
     </table>
   </td></tr></table></body></html>`;
 
-  return { subject: `${name}, you're ${a.name} — your Deployment Index result`, html };
+  return { subject: `${name}, you're ${a.name} · your Deployment Index result`, html };
 }
 
 function notifyEmail(lead: Lead): { subject: string; html: string } {
@@ -86,9 +86,9 @@ function notifyEmail(lead: Lead): { subject: string; html: string } {
           ${row("Class", esc(a.name))}
           ${row("Industry", esc(industryLabel(r.industry)))}
           ${row("Rank", `${gradeFor(r.percentile)} · top ${r.topPercent}% (${r.percentile}th pct)`)}
-          ${row("Runner-up", r.runnerUp ? `${esc(ARCHETYPES[r.runnerUp].short)} (by ${r.margin} pt${r.margin === 1 ? "" : "s"})` : "—")}
+          ${row("Runner-up", r.runnerUp ? `${esc(ARCHETYPES[r.runnerUp].short)} (by ${r.margin} pt${r.margin === 1 ? "" : "s"})` : "None")}
           ${row("Wants quarterly report", lead.wantsReport ? "✅ yes" : "no")}
-          ${row("Wants 20-min session", lead.wantsSession ? "✅ YES — follow up" : "no")}
+          ${row("Wants 20-min session", lead.wantsSession ? "✅ YES · follow up" : "no")}
         </table>
         <p style="margin:18px 0 0;font-size:13px;color:#888">Reply to this email to reach ${esc(lead.name)} directly.</p>
       </td></tr>
@@ -96,7 +96,7 @@ function notifyEmail(lead: Lead): { subject: string; html: string } {
   </td></tr></table></body></html>`;
 
   return {
-    subject: `Lead: ${lead.name} (${lead.role}) — ${a.short}${lead.wantsSession ? " · wants session" : ""}`,
+    subject: `Lead: ${lead.name} (${lead.role}) · ${a.short}${lead.wantsSession ? " · wants session" : ""}`,
     html,
   };
 }

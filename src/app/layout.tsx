@@ -25,7 +25,7 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://deploymentindex.2pt.ai"),
-  title: "The Deployment Index — Which AI marketing leader are you?",
+  title: "The Deployment Index: Which AI marketing leader are you?",
   description:
     "Find out in 60 seconds. Five archetypes. One industry ranking. Built by 2PT, the deployment firm for marketing.",
   openGraph: {

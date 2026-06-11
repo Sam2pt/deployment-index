@@ -43,7 +43,7 @@ export default function ArchetypeReveal({
         transition={{ delay: 0.1 }}
         className="font-pixel accent-glow blink mb-4 text-xs uppercase"
       >
-        {name ? `${name} — class unlocked` : "★ Class unlocked ★"}
+        {name ? `${name} · class unlocked` : "★ Class unlocked ★"}
       </motion.p>
 
       {/* Character + celebratory burst. */}
